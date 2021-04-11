@@ -1,0 +1,46 @@
+job "{{.Name}}" {
+  datacenters = ["local"]
+
+  group "{{$.Group.Name}}" {
+    restart {
+      interval = "30m"
+      attempts = 2
+      delay    = "15s"
+      mode     = "fail"
+    }
+
+    reschedule {
+      attempts       = 1
+      interval       = "24h"
+      unlimited      = false
+      delay          = "5s"
+      delay_function = "constant"
+    }
+
+    {{range $index, $task := $.Group.Tasks}}
+        task "{{$task.Name}}" {
+        resources {
+                cpu    = 20
+                memory = 10
+         }
+
+          kill_timeout = "60s"
+
+          env {
+            IDENTITY = "{{$task.Identity}}"
+            TOPIC = "{{$task.Topic}}"
+            QUEUES = "{{$task.Queues}}"
+            RABBITMQ_QUEUE_BINDING_KEY = "{{$task.QueueBindingKey}}"
+            RABBITMQ_CONNECTION_STRING="{{$task.RabbitMQConnectionString}}"
+          }
+
+          driver = "raw_exec"
+
+          config {
+            command = "{{$task.Cmd}}"
+            args    = {{$task.Args}}
+          }
+        }
+    {{end}}
+   }
+}

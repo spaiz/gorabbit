@@ -1,0 +1,23 @@
+{
+  "description": "Workers",
+  "workers": [
+    {
+      "identity": "orders_processing",
+      "topic": "orders",
+      "queuesSet": {
+          "partitionsNumber": 50
+      },
+      "instancesNumber": 25,
+      "rabbitMQConnectionString": "amqp://user:bitnami@localhost:5672"
+    },
+    {
+      "identity": "orders_marketing",
+      "topic": "orders",
+      "queuesSet": {
+        "partitionsNumber": 50
+      },
+      "instancesNumber": 25,
+      "rabbitMQConnectionString": "amqp://user:bitnami@localhost:5672"
+    }
+  ]
+}
