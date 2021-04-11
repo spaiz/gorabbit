@@ -5,18 +5,18 @@
       "identity": "orders_processing",
       "topic": "orders",
       "queuesSet": {
-          "partitionsNumber": 50
+          "partitionsNumber": 4
       },
-      "instancesNumber": 25,
+      "instancesNumber": 4,
       "rabbitMQConnectionString": "amqp://user:bitnami@localhost:5672"
     },
     {
       "identity": "orders_marketing",
       "topic": "orders",
       "queuesSet": {
-        "partitionsNumber": 50
+        "partitionsNumber": 4
       },
-      "instancesNumber": 25,
+      "instancesNumber": 2,
       "rabbitMQConnectionString": "amqp://user:bitnami@localhost:5672"
     }
   ]
