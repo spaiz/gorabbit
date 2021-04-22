@@ -67,16 +67,15 @@ func ConsumerUp() error {
 	}
 
 	for _, worker := range manifest.Workers {
-		err := sh.Run("nomad", "job", "run", fmt.Sprintf("../nomad/jobs/%s.nomad", worker.Identity))
+		job := fmt.Sprintf("../nomad/jobs/%s.nomad", worker.Identity)
+		log.Printf("Ranning job: %s", job)
+		err := sh.Run("nomad", "job", "run", job)
 		if err != nil {
 			log.Printf("Failed to start job: %s (%s)", worker.Identity, err)
 		}
 	}
 
 	return nil
-
-
-	return sh.Run("nomad", "job", "run", "../nomad/jobs/inbox.nomad")
 }
 
 func ConsumerShutDown() error {
